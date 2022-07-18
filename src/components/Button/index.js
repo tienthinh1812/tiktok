@@ -16,6 +16,7 @@ function Button({
     small,
     large,
     children,
+    className,
     ...passProps
 }) {
     let Comp = 'button';
@@ -43,6 +44,7 @@ function Button({
         disabled,
         small,
         large,
+        [className]: className,
     });
     return (
         <Comp className={classes} {...props}>
