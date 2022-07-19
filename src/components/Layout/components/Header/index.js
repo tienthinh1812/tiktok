@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCircleQuestion,
     faCircleXmark,
-    faCloudUpload,
     faCoins,
     faEllipsisVertical,
     faGear,
@@ -15,6 +14,7 @@ import {
     faSpinner,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { MessageIcon, NotificaIcon, PlusIcon } from '~/components/Icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
 
@@ -25,6 +25,8 @@ import image from '~/assets/images';
 import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
 import 'tippy.js/dist/tippy.css';
+import Notification from '~/components/Notification';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -61,6 +63,7 @@ function Header() {
     const [visible, setVisible] = useState([]);
 
     const currentUser = true;
+    const notiNumber = 0;
 
     useEffect(() => {
         setTimeout(() => {
@@ -133,9 +136,18 @@ function Header() {
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
-                            <Tippy delay={[0, 200]} content="Upload Video" placement="bottom">
+                            <Button to={'/upload'} unrouned small leftIcon={<PlusIcon />}>
+                                Upload
+                            </Button>
+                            <Tippy delay={[0, 200]} content="Message" placement="bottom">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <MessageIcon width="2.6rem" height="2.6rem" />
+                                </button>
+                            </Tippy>
+                            <Tippy delay={[0, 200]} content="Notification" placement="bottom">
+                                <button className={cx('action-btn')}>
+                                    <NotificaIcon />
+                                    {notiNumber > 0 && <Notification>{notiNumber}</Notification>}
                                 </button>
                             </Tippy>
                         </>
@@ -149,7 +161,7 @@ function Header() {
                     )}
                     <Menu items={currentUser ? MENU_USER : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 className={cx('user-avatar')}
                                 alt="Nguyen Van A"
                                 src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/f75993e97bd5424690cb3c702fc88b0d~c5_100x100.jpeg?x-expires=1658030400&x-signature=Yp38lGz9ijhHjmUStQioKTPSpB4%3D"

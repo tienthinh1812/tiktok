@@ -100,11 +100,21 @@
 }
 
 .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: rgb(22, 24, 35);
+    width: 3.2rem;
+    height: 3.2rem;
     font-size: 2.2rem;
     background-color: transparent;
-    padding: 4px 12px;
+    margin-left: 16px;
     cursor: pointer;
+    position: relative;
+}
+
+.upload-btn {
+    color: var(--primary);
 }
 
 .more-btn {
@@ -120,6 +130,6 @@
     height: 32px;
     object-fit: cover;
     border-radius: 50%;
-    margin-left: 12px;
+    margin-left: 16px;
     cursor: pointer;
 }
