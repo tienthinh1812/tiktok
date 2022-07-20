@@ -6,6 +6,8 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef, useState } from 'react';
+import { useDebound } from '~/components/hooks';
+import * as searchService from '~/apiServices/searchService';
 
 const cx = classNames.bind(styles);
 
@@ -17,22 +19,23 @@ function Search() {
 
     const inputRef = useRef();
 
+    const debound = useDebound(searchValue, 500);
+
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debound.trim()) {
             setSearchResult([]);
             return;
         }
 
-        setLoading(true);
+        const fetchApi = async () => {
+            setLoading(true);
+            const res = await searchService.search(debound);
+            setSearchResult(res);
+            setLoading(false);
+        };
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => setLoading(false));
-    }, [searchValue]);
+        fetchApi();
+    }, [debound]);
 
     const handleClear = () => {
         setSearchValue('');
